@@ -1,1 +1,1 @@
-source ~/src/config/dot.profile
+source ~/config/dot.profile
