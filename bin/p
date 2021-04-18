@@ -64,7 +64,7 @@ def main():
     path = convert_to_windows(path)
 
     # if the input was already a full Windows path, they probably want a Linux path
-    if origpath.lower() == path.lower():
+    if origpath.lower().strip() == path.lower().strip():
         path = convert_to_linux(path)
 
     pyperclip.copy(path)
