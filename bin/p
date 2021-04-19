@@ -1,0 +1,73 @@
+#!/usr/bin/env python
+import pyperclip, os, sys, re
+
+special = r'([^\w/\\.@+=-])'
+
+def escape(path):
+    path = re.sub(special, r'\\\g<1>', path)
+    return path
+
+def unescape(path):
+    path = re.sub(r'\\' + special, r'\g<1>', path)
+    return path
+
+def convert_to_windows(path):
+
+    # convert Linux path into a format that os.path.abspath will recognize 
+    # (don't do this in the RARE case that this forward-slash-delimited path actually
+    #    refers to an existing Windows path, with unusual directory names)
+    if not os.path.exists(path):
+        # remove backslash-escaped linux special shell chars
+        path = unescape(path)
+        
+        # convert drive letter to Windows
+        m = re.search(r'^/([a-z])\b/?(.*)', path, re.I)
+        if m:
+            path = m.group(1).upper() + ':\\' + m.group(2)
+
+    # convert the Linux slashes to Windows and make the path absolute.
+    # this might be what they want.
+    path = os.path.abspath(path)
+    
+    return path
+    
+def convert_to_linux(path):
+    # convert Windows drive letter to Linux
+    m = re.search(r'^([a-z]):\\(.*)', path, re.I)
+    if m:
+        path = '/' + m.group(1).lower() + '/' + m.group(2)
+        
+    # convert slashes to Linux
+    path = path.replace('\\', '/')
+    
+    # backslash-escape special Linux shell chars
+    path = escape(path)
+    
+    return path
+
+def main():
+    # input from command line or clipboard
+    if len(sys.argv) > 1:
+        path = sys.argv[1]
+    else:
+        path = pyperclip.paste()
+
+    path = path.strip()
+
+    # if it's multiline, we were called by mistake
+    if '\n' in path: return
+    
+    origpath = path
+
+    # input may be in either Windows or Linux format
+
+    path = convert_to_windows(path)
+
+    # if the input was already a full Windows path, they probably want a Linux path
+    if origpath.lower() == path.lower():
+        path = convert_to_linux(path)
+
+    pyperclip.copy(path)
+    print(path)
+
+main()
