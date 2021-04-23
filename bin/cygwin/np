@@ -1,0 +1,5 @@
+#!/bin/bash
+export PWD=`cygpath -wa .`
+fname=`cygpath -wa "$1"`
+shift
+/cygdrive/c/Program\ Files/Notepad++/notepad++.exe "$fname" "$@" &

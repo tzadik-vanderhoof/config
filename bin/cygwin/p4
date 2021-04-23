@@ -1,0 +1,3 @@
+#!/bin/bash
+export PWD=`cygpath -wa .`
+exec /cygdrive/c/Program\ Files/Perforce/p4.exe "$@"

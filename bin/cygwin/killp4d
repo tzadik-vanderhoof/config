@@ -1,0 +1,3 @@
+#!/bin/bash
+pkill p4d
+sleep 1

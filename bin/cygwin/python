@@ -1,0 +1,5 @@
+#!/bin/bash
+export PWD=`cygpath -wa .`
+script=`cygpath -wa "$1"`
+shift
+exec /cygdrive/c/Python39/python.exe "$script" "$@"
