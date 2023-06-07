@@ -1,0 +1,27 @@
+<swagger-definitions xmlns="http://schemas.microsoft.com/2013/06/metadata">
+
+  <api xmlns="http://schemas.microsoft.com/2013/06/metadata">
+
+    <name>MyAPI</name>
+
+    <description>My API description</description>
+
+    <subscription-key-header-name>Ocp-Apim-Subscription-Key</subscription-key-header-name>
+
+    <service-url>http://myapi.com</service-url>
+
+    <authentication-settings>
+
+      <subscription-key-required>true</subscription-key-required>
+
+    </authentication-settings>
+
+    <paths>
+
+      <path-template>/users</path-template>
+
+    </paths>
+
+  </api>
+
+</swagger-definitions>
