@@ -1,3 +1,0 @@
-#!/bin/bash
-/c/Program Files\ (x86)/GnuWin32/bin/ed.exe -p'> ' -v "$@"
-sleep 1
